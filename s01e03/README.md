@@ -23,6 +23,15 @@ The July merge batch is desk processing, not the beginning of the incident. The 
 
 All 30 original export files, including accepted decision 0001, are preserved byte-for-byte. This review proposes cause-based triage; it does not claim that the desk has accepted a replacement decision.
 
+## Subsequent desk update
+
+After the first submission accepted both tickets, the course revealed an engineering update: #4471 closed on 5 October 2026.
+
+- Parser: fixed by `fix(dates): parse dd/mm for eu locales` — corresponding issue resolution: **completed**.
+- Hint: won't fix because booking-v3 was retired — corresponding issue resolution: **not planned**, not completed.
+
+The review page records these distinct outcomes and links their source. The counts remain the earlier export snapshot. This work does not claim to have patched or independently tested the production service.
+
 ## Reproduce
 
 Requires Node.js 22.18 or newer and npm. From this directory:

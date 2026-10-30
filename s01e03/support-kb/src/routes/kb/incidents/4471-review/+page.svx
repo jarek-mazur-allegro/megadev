@@ -2,7 +2,7 @@
 layout: runbook
 title: '#4471 review · separate the parser from the form hint'
 owner: jarek-mazur-allegro
-status: reviewed
+status: closed
 reviewed: '2026-10-30'
 signature: 'v1.eyJzdWIiOiIzMzgyIiwiYXVkIjoiY2hhbGxlbmdlOndoYXQtaXQtc2hvd3MiLCJpYXQiOjE3OTMzNTkzODksImV4cCI6MTc5MzQ0NTc4OX0.1Yg7kyXU9852WXXkQ_8CPQI2nui1dijxnA5hI8MWjvw'
 ---
@@ -89,10 +89,26 @@ stale at this review. The incident's later review date does not validate its
 
 ## Follow-up
 
-Keep both engineering issues open until each mechanism has its own verified fix.
-Test day-first locale interpretation separately from hint consistency; preserve
-month-first behavior and booking-v2 coverage. Reconcile future exports by report ID,
-retain anomalous observations, and compare arrivals with processing rather than
-treating the merge count as the incident onset.
+### Engineering update: #4471 closed on 5 October 2026
+
+After the initial review, the course published an
+[engineering update](https://hq.mega.dev/challenges/what-it-shows#engineering-update).
+It reports two different outcomes, not two fixes:
+
+- **Parser — fixed:** `fix(dates): parse dd/mm for eu locales`.
+  The matching GitHub resolution for [issue #1](https://github.com/jarek-mazur-allegro/megadev/issues/1)
+  is **completed**.
+- **Hint — won't fix:** the booking-v3 form was retired.
+  The matching GitHub resolution for [issue #2](https://github.com/jarek-mazur-allegro/megadev/issues/2)
+  is **not planned**, not completed.
+
+These are the desk's reported outcomes, not fixes or production validation performed
+by this review. Retirement removes the affected form; it does not mean its hint
+was repaired. The report counts above remain the historical 2026-10-04 snapshot.
+
+For future changes, test day-first locale interpretation separately from hint
+consistency; preserve month-first behavior and booking-v2 coverage. Reconcile
+future exports by report ID, retain anomalous observations, and compare arrivals
+with processing rather than treating the merge count as the incident onset.
 
 <RenderStamp {signature} />

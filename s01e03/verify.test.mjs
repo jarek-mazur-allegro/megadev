@@ -78,6 +78,15 @@ test('rendered page has its computed stamp, counts, links and timeline', () => {
   assert.ok(!html.includes('no desk ref:'));
 });
 
+test('subsequent engineering update distinguishes a fix from retirement', () => {
+  const html = fs.readFileSync(path.join(here, 'support-kb/rendered/kb/incidents/4471-review/index.html'), 'utf8');
+  assert.ok(html.includes('fix(dates): parse dd/mm for eu locales'));
+  assert.ok(html.includes('the booking-v3 form was retired'));
+  assert.ok(html.includes('not planned'));
+  assert.ok(html.includes('5 October 2026'));
+  assert.ok(!html.includes('Keep both engineering issues open'));
+});
+
 test('public lockfile contains no private registry or URL credentials', () => {
   for (const p of Object.values(json('support-kb/package-lock.json').packages)) {
     if (!p.resolved) continue;
