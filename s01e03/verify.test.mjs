@@ -62,8 +62,14 @@ test('all supplied duplicate examples use cause, not subject equality', () => {
 test('rendered page has its computed stamp, counts, links and timeline', () => {
   const manifest = json('support-kb/rendered/review-manifest.json');
   const html = fs.readFileSync(path.join(here, 'support-kb/rendered', manifest.rendered), 'utf8');
-  assert.equal(manifest.deskRef, deskRef(manifest.signature));
+  const source = fs.readFileSync(path.join(here, 'support-kb', manifest.source.replace(/^\/src\//, 'src/')), 'utf8');
+  const signature = source.match(/^signature: '([^']+)'$/m)?.[1];
+  assert.ok(signature && /^v1\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$/.test(signature), 'Page uses the course-issued ticket');
+  assert.equal(manifest.signatureSource, 'page frontmatter');
+  assert.equal(manifest.deskRef, deskRef(signature));
   assert.ok(html.includes(manifest.deskRef));
+  assert.ok(!html.includes(signature), 'Rendered HTML shows only the derived desk reference');
+  assert.ok(!Object.hasOwn(manifest, 'signature'), 'Manifest does not duplicate the ticket');
   for (const count of [379, 33, 412]) assert.ok(html.includes(`>${count}<`));
   for (const issue of [1, 2]) assert.ok(html.includes(`https://github.com/jarek-mazur-allegro/megadev/issues/${issue}`));
   assert.ok(html.includes('<svg'));

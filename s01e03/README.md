@@ -8,8 +8,8 @@ This review uses the supplied **2026-10-04 KB export**. It is not a claim about 
 - [booking-v3 hint issue: 33 reports](https://github.com/jarek-mazur-allegro/megadev/issues/2).
 - Page source: `support-kb/src/routes/kb/incidents/4471-review/+page.svx`.
 - Rendered page: `support-kb/rendered/kb/incidents/4471-review/index.html`.
-- Page signature: `Codex for jarek-mazur-allegro`.
-- Computed desk reference: `DR-MCTE-BSES`.
+- Page signature: the course-issued ticket in the page frontmatter; its full value is not duplicated here.
+- Computed desk reference: `DR-9S3R-0SMJ`.
 
 The rendered page is the actual Svelte/mdsvex server-rendered output, including the supplied layout, cause table, timeline and RenderStamp. It is not a Markdown-only approximation. Open the HTML locally, or use the local preview below. No public web host is required.
 

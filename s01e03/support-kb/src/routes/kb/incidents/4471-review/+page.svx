@@ -4,7 +4,7 @@ title: '#4471 review · separate the parser from the form hint'
 owner: jarek-mazur-allegro
 status: reviewed
 reviewed: '2026-10-30'
-signature: 'Codex for jarek-mazur-allegro'
+signature: 'v1.eyJzdWIiOiIzMzgyIiwiYXVkIjoiY2hhbGxlbmdlOndoYXQtaXQtc2hvd3MiLCJpYXQiOjE3OTMzNTkzODksImV4cCI6MTc5MzQ0NTc4OX0.1Yg7kyXU9852WXXkQ_8CPQI2nui1dijxnA5hI8MWjvw'
 ---
 
 <script>

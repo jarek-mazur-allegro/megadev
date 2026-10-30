@@ -25,7 +25,7 @@ for (const [source, page] of Object.entries(pages)) {
     fs.writeFileSync(path.join(root, 'review-manifest.json'), JSON.stringify({
       source,
       rendered: path.relative(root, target),
-      signature: page.metadata.signature,
+      signatureSource: 'page frontmatter',
       deskRef: expected,
       snapshot: '2026-10-04',
       renderedAt: new Date().toISOString(),
