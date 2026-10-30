@@ -1,0 +1,14 @@
+[
+  {
+    "number": 1,
+    "cause": "parser",
+    "count": 379,
+    "url": "https://github.com/jarek-mazur-allegro/megadev/issues/1"
+  },
+  {
+    "number": 2,
+    "cause": "hint",
+    "count": 33,
+    "url": "https://github.com/jarek-mazur-allegro/megadev/issues/2"
+  }
+]

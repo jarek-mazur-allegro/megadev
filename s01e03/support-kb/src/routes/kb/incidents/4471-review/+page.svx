@@ -1,0 +1,98 @@
+---
+layout: runbook
+title: '#4471 review · separate the parser from the form hint'
+owner: jarek-mazur-allegro
+status: reviewed
+reviewed: '2026-10-30'
+signature: 'Codex for jarek-mazur-allegro'
+---
+
+<script>
+  import Callout from '#lib/kb/Callout.svelte';
+  import CauseTable from '#lib/kb/CauseTable.svelte';
+  import QueueTimeline from '#lib/kb/QueueTimeline.svelte';
+  import ReviewEvidence from '#lib/kb/ReviewEvidence.svelte';
+  import RenderStamp from '#lib/kb/RenderStamp.svelte';
+</script>
+
+This review is based on the **2026-10-04 export**, not today's live queue.
+The desk continues working. Recompute against a new export before claiming current counts.
+The review date means this snapshot was checked; it does not make the data newer.
+
+<Callout kind="warn">
+The original incident's “one issue, one fix” claim is not supported by its computed cause
+table. A matching subject line does not establish a matching cause.
+</Callout>
+
+## Two independent failure mechanisms
+
+**Shared parser:** for day-first tenant locales, the shared parser reads month first.
+For example, entering 07/04/2026 intending 7 April is interpreted as 4 July.
+The supplied classifier places app/email reports and booking-v2 form reports here.
+Track the repair in [engineering issue #1](https://github.com/jarek-mazur-allegro/megadev/issues/1).
+
+**booking-v3 hint:** this form prints MM/DD/YYYY even for day-first tenants, while
+interpreting the input the tenant's way. Following the hint with 08/06/2026 intending
+6 August instead produces 8 June. The relevant tenants are alder.physio (de-DE),
+copper.studio (es-ES), and pale.harbour (pt-PT).
+Track this separate repair in [engineering issue #2](https://github.com/jarek-mazur-allegro/megadev/issues/2).
+
+These examples follow the supplied mechanisms; they are not results of running the
+production booking service. The exported code is evidence for this classification,
+not a production patch or an independent reproduction environment.
+
+<ReviewEvidence />
+
+## What the existing cause table actually shows
+
+<CauseTable ticket={4471} />
+
+The original ticket owns its majority cause. The other cause still needed an independent
+engineering issue, even though the desk merged its reports into the same ticket.
+The “no ticket of its own” label above describes the **exported desk state**;
+the GitHub issues linked here record the split made during this review.
+
+## Arrival and processing timeline
+
+<QueueTimeline ticket={4471} />
+
+The two bars represent different events. The backlog received since April must not
+be described as an incident that first appeared during the large July merge batch.
+
+## Proposed triage rule: compare causes, not subjects
+
+Resolve the tenant, read its locale and booking-form version, and check the channel.
+Classify with `causeOf`; merge only when `sameCause` confirms the same known cause.
+Do not auto-merge an unknown tenant or an unplaced report. A subject is a search aid,
+not the duplicate key.
+
+- **Different subjects, same cause:** kettle.books app versus email belong together.
+- **Same subject and tenant, different causes:** alder.physio form (booking-v3 hint)
+  versus app (shared parser) must stay separate.
+- **Same subject and channel, different tenants:** copper.studio form versus morrow.tax
+  form must stay separate because their form versions differ.
+- **Different subjects, same cause:** pale.harbour form and alder.physio form can merge.
+- **Unknown tenant:** identical text alone does not establish a known shared cause.
+
+The accepted [decision 0001](/kb/decisions/0001-dedupe-by-subject) is historical evidence
+and has not been edited. This review recommends replacing its subject-only policy
+through a new decision; it does not claim the desk has already approved or deployed one.
+The original [triage page](/kb/triage/dedupe) says to merge on subject, while its
+`DedupeExplorer` runs cause-based checks. Read both the words and what the components do.
+
+## Review freshness
+
+The shared layout marks a page stale after more than 180 days without review.
+The accepted triage guidance and decision 0001 were reviewed on 2024-06-11 and are
+stale at this review. The incident's later review date does not validate its
+“one fix” claim: its computed table contradicts that claim.
+
+## Follow-up
+
+Keep both engineering issues open until each mechanism has its own verified fix.
+Test day-first locale interpretation separately from hint consistency; preserve
+month-first behavior and booking-v2 coverage. Reconcile future exports by report ID,
+retain anomalous observations, and compare arrivals with processing rather than
+treating the merge count as the incident onset.
+
+<RenderStamp {signature} />
